@@ -1,0 +1,11 @@
+{
+  "name": "testJS",
+  "version": "1.0.0",
+  "description": "test js node project",
+  "main": "test.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "author": "tahel Milstein",
+  "license": "ISC"
+}

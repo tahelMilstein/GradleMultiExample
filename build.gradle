@@ -1,0 +1,34 @@
+buildscript {
+  repositories {
+    jcenter()
+    // If you want to use a SNAPSHOT build, add the OJO repository:
+    maven {
+      name 'JFrog OSS snapshot repo'
+      url  'https://oss.jfrog.org/oss-snapshot-local/'
+    }
+  }
+  dependencies {
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.8'
+  }
+}
+allprojects {
+apply plugin: 'com.moowork.node'
+ task hello << {task -> println "I'm $task.project.name" }
+}
+
+project (':js') {
+	task myScript(type: NodeTask) {
+	  script = file('test.js')
+}
+}
+
+project (':javaProject') {
+ apply plugin: 'java'
+}
+project(':mavenProject') {
+	task runMavenBuild(type: Exec) {
+		 commandLine 'cmd', '/c', 'mvn clean'
+		//workingDir = file('/mavenProject')
+	}
+	runMavenBuild.dependsOn tasks.getByPath(':js:myScript').path
+}

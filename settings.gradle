@@ -1,0 +1,1 @@
+include 'node-async', 'frontend-npm-goodies', 'js', 'mavenProject', 'javaProject'
