@@ -15,6 +15,13 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<repositories>
+	<repository>              
+		  <id>central</id>
+		  <name>Central</name>
+		  <url>http://repo1.maven.org/maven2</url>
+	</repository>
+	</repositories>
 
 	<build>
 		<plugins>
