@@ -1,6 +1,7 @@
 {
   "name": "testJS",
   "version": "1.0.0",
+  "private": true,
   "description": "test js node project",
   "main": "test.js",
   "scripts": {
