@@ -1,38 +1,45 @@
 buildscript {
-  repositories {
-    jcenter()
-    // If you want to use a SNAPSHOT build, add the OJO repository:
-    maven {
-      name 'JFrog OSS snapshot repo'
-      url  'https://oss.jfrog.org/oss-snapshot-local/'
-    }
-  }
-  dependencies {
-    classpath 'com.moowork.gradle:gradle-node-plugin:0.8'
-  }
+	repositories {
+		jcenter()
+		// If you want to use a SNAPSHOT build, add the OJO repository:
+		maven {
+			name 'JFrog OSS snapshot repo'
+			url  'https://oss.jfrog.org/oss-snapshot-local/'
+		}
+	}
+	dependencies {
+		classpath 'com.moowork.gradle:gradle-node-plugin:0.8'
+	}
 }
 allprojects {
-apply plugin: 'com.moowork.node'
- task hello << {task -> println "I'm $task.project.name" }
+	apply plugin: 'com.moowork.node'
+	apply plugin: 'maven'
+
+	repositories {
+
+		maven { url "http://nexus:8081/nexus/content/groups/build.snapshots/" }
+		maven { url "http://repo.maven.apache.org/maven2" }
+	}
+	task hello << {task -> println "I'm $task.project.name" }
 }
 
 project (':js') {
 	task myScript(type: NodeTask) {
-	  script = file('test.js')
-}
+		script = file('test.js')
+	}
 }
 
 project (':javaProject') {
- apply plugin: 'java'
+	apply plugin: 'java'
 }
 project(':mavenProject') {
 	task runMavenBuild(type: Exec) {
-		 commandLine 'cmd', '/c', 'mvn clean -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 '
+		commandLine 'cmd', '/c', 'mvn clean -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 '
 		//workingDir = file('/mavenProject')
 	}
 	runMavenBuild.dependsOn tasks.getByPath(':js:myScript').path
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
+	gradleVersion = '2.2'
 }
