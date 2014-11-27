@@ -27,7 +27,7 @@ project (':javaProject') {
 }
 project(':mavenProject') {
 	task runMavenBuild(type: Exec) {
-		 commandLine 'cmd', '/c', 'mvn clean'
+		 commandLine 'cmd', '/c', 'mvn clean -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 '
 		//workingDir = file('/mavenProject')
 	}
 	runMavenBuild.dependsOn tasks.getByPath(':js:myScript').path
